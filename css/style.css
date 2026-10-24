@@ -240,6 +240,56 @@ hr.divider {
 }
 .highlight__cta:hover { border-color: var(--accent); }
 
+/* ---------- Current projects ---------- */
+
+.project-grid {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  background: var(--wash);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.project-card__name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.project-card p {
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  flex: 1;
+}
+
+.project-card__url {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
 /* ---------- Logo cards (career / education) ---------- */
 
 .logo-card {
