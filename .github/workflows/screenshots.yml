@@ -1,0 +1,47 @@
+name: Capture project screenshots
+on:
+  push:
+    branches: [capture-project-screenshots]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i playwright@1.49.1 && npx playwright install --with-deps chromium
+      - name: Shoot
+        run: |
+          cat > shot.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const sites = {
+            looper: 'https://hirelooper.com',
+            goodsocials: 'https://goodsocials.co',
+            hundredbucks: 'https://hundredbucks.co',
+            vindje: 'https://vindje.com',
+            thunder: 'https://storm-ledger-blond.vercel.app/',
+          };
+          const b = await chromium.launch();
+          for (const [k, u] of Object.entries(sites)) {
+            try {
+              const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+              await p.goto(u, { waitUntil: 'networkidle', timeout: 60000 });
+              await p.waitForTimeout(3000);
+              await p.screenshot({ path: `images/${k}.jpg`, type: 'jpeg', quality: 82 });
+              console.log('ok', k, p.url());
+              await p.close();
+            } catch (e) { console.log('fail', k, e.message.split('\n')[0]); }
+          }
+          await b.close();
+          JS
+          node shot.mjs
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add images/*.jpg
+          git commit -m "Add project screenshots" || echo "nothing"
+          git push
