@@ -240,54 +240,64 @@ hr.divider {
 }
 .highlight__cta:hover { border-color: var(--accent); }
 
-/* ---------- Current projects ---------- */
+/* ---------- Other projects ---------- */
 
 .project-grid {
   max-width: var(--wide);
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
 
 .project-card {
   display: flex;
   flex-direction: column;
-  padding: 28px 28px 24px;
+  padding: 10px 10px 16px;
   border: 1px solid var(--hairline);
-  border-radius: 16px;
+  border-radius: 12px;
   background: var(--wash);
   text-decoration: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 
-.project-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+.project-card:hover { border-color: var(--accent); }
+
+.project-card__shot {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 7px;
+  box-shadow: 0 0 0 1px var(--hairline);
+  margin-bottom: 12px;
+  background: #eee;
 }
 
 .project-card__name {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   color: var(--ink);
-  letter-spacing: -0.01em;
-  margin-bottom: 8px;
+  padding: 0 4px;
+  margin-bottom: 4px;
 }
 
 .project-card p {
-  margin: 0 0 18px;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  flex: 1;
+  margin: 0;
+  padding: 0 4px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
 }
 
-.project-card__url {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--accent);
+@media (max-width: 960px) {
+  .project-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .project-grid { grid-template-columns: 1fr; }
 }
 
 /* ---------- Logo cards (career / education) ---------- */
