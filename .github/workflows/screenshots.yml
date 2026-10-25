@@ -18,22 +18,20 @@ jobs:
           cat > shot.mjs <<'JS'
           import { chromium } from 'playwright';
           const sites = {
-            looper: 'https://hirelooper.com',
-            goodsocials: 'https://goodsocials.co',
             hundredbucks: 'https://hundredbucks.co',
-            vindje: 'https://vindje.com',
-            thunder: 'https://storm-ledger-blond.vercel.app/',
+            'hundredbucks-www': 'https://www.hundredbucks.co',
+            'hundredbucks-vercel': 'https://hundredbucks.vercel.app',
           };
           const b = await chromium.launch();
           for (const [k, u] of Object.entries(sites)) {
             try {
               const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
-              await p.goto(u, { waitUntil: 'networkidle', timeout: 60000 });
+              await p.goto(u, { waitUntil: 'load', timeout: 90000 });
               await p.waitForTimeout(3000);
               await p.screenshot({ path: `images/${k}.jpg`, type: 'jpeg', quality: 82 });
               console.log('ok', k, p.url());
               await p.close();
-            } catch (e) { console.log('fail', k, e.message.split('\n')[0]); }
+            } catch (e) { console.log('fail', k, e.message.slice(0,300)); }
           }
           await b.close();
           JS
